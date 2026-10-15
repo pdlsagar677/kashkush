@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Allow login page and auth API through
   if (pathname.startsWith('/login') || pathname.startsWith('/api/auth')) {
     return NextResponse.next()
   }
@@ -13,8 +12,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const loginUrl = new URL('/login', request.url)
-  return NextResponse.redirect(loginUrl)
+  return NextResponse.redirect(new URL('/login', request.url))
 }
 
 export const config = {

@@ -11,6 +11,7 @@ const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
 let clipboardText = ''
+const connectedUsers = new Map() // socketId → nickname
 
 app.prepare().then(() => {
   const httpServer = createServer(async (req, res) => {
@@ -28,16 +29,36 @@ app.prepare().then(() => {
     cors: { origin: '*' },
   })
 
-  // Make io accessible from Next.js API routes
   global.__io = io
 
   io.on('connection', (socket) => {
-    // Sync new client with current clipboard state
     socket.emit('clipboard:init', clipboardText)
+
+    socket.on('user:join', (nickname) => {
+      connectedUsers.set(socket.id, nickname)
+      io.emit('users:update', [...connectedUsers.values()])
+    })
 
     socket.on('clipboard:update', (text) => {
       clipboardText = text
       socket.broadcast.emit('clipboard:update', text)
+    })
+
+    socket.on('typing:start', () => {
+      const name = connectedUsers.get(socket.id)
+      if (name) socket.broadcast.emit('typing:update', { nickname: name, isTyping: true })
+    })
+
+    socket.on('typing:stop', () => {
+      const name = connectedUsers.get(socket.id)
+      if (name) socket.broadcast.emit('typing:update', { nickname: name, isTyping: false })
+    })
+
+    socket.on('disconnect', () => {
+      const name = connectedUsers.get(socket.id)
+      connectedUsers.delete(socket.id)
+      if (name) socket.broadcast.emit('typing:update', { nickname: name, isTyping: false })
+      io.emit('users:update', [...connectedUsers.values()])
     })
   })
 
@@ -47,7 +68,6 @@ app.prepare().then(() => {
   })
 
   httpServer.listen(port, '0.0.0.0', () => {
-    console.log(`> Ready on http://${hostname}:${port}`)
-    console.log(`> Network: http://<your-local-ip>:${port}`)
+    console.log(`> Ready on http://localhost:${port}`)
   })
 })
