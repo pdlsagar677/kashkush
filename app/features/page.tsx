@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Features — simple.savr',
+  title: 'Features — Khas_khus',
 }
 
 const features = [
@@ -55,7 +55,7 @@ export default function FeaturesPage() {
       <div className="mt-10 bg-teal-50 border border-teal-100 rounded-2xl p-6 text-center">
         <h2 className="font-semibold text-teal-800 mb-2">How it works</h2>
         <p className="text-sm text-teal-700">
-          simple.savr runs a local WebSocket server on your device. Every browser tab
+          Khas_khus runs a local WebSocket server on your device. Every browser tab
           connected to the same server shares a live clipboard and file list. Secret notes
           are encrypted in your browser before being sent — the server only stores an
           unreadable blob that disappears after the first read.

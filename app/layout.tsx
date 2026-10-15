@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'simple.savr — sync text and files across devices',
+  title: 'Khas_khus — sync text and files across devices',
   description: 'Sync text and files across every device on your WiFi network. No accounts, no installs.',
 }
 

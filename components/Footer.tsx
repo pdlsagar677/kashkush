@@ -12,7 +12,7 @@ export default function Footer() {
           <span>v1.0</span>
         </div>
         <p className="text-xs text-gray-300 text-center mt-4">
-          © 2025 simple.savr
+          © 2025 Khas_khus. All rights reserved.
         </p>
       </div>
     </footer>

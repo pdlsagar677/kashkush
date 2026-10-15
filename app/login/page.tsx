@@ -33,7 +33,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 w-full max-w-sm">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-teal-600">simple.savr</h1>
+          <h1 className="text-2xl font-bold text-teal-600">Khas_khus</h1>
           <p className="text-sm text-gray-500 mt-1">Enter the access password to continue</p>
         </div>
 
